@@ -4,8 +4,12 @@ import "./TVShowList.css";
 import FakeData from "./tvmaze_shows.json";
 
 const isLive = false;
-const showJSON = false;
+const showJSON = true;
 
+function sortByRating(shows){
+  shows.sort((a, b) => b.rating.average - a.rating.average);
+  return shows;
+}
 function TVShowList(props) {
   const [data, setData] = useState({ shows: [] });
   useEffect(() => {
@@ -18,7 +22,7 @@ function TVShowList(props) {
       fetchData();
     } else {
       console.log("using static fake data")
-      setData({ shows: FakeData });
+      setData({ shows: sortByRating(FakeData) });
     }
   }, []);
 
@@ -33,12 +37,13 @@ function TVShowList(props) {
             </a>
             Rated: {item.rating && item.rating.average} (
             {item.genres && item.genres.join(",")})
+            <img src={item.image.medium} />
             <p>{stripTags(item.summary)}</p>
           </li>
         ))}
       </ul>
       <div>
-        <pre id="rawJSON">{JSON.stringify(data.shows, null, 2)}</pre>
+        {showJSON ? <pre id="rawJSON">{JSON.stringify(data.shows, null, 2)}</pre> : null }
       </div>
     </div>
   );
