@@ -10,14 +10,14 @@ function sortByRating(shows) {
   return shows;
 }
 
-function matches(inspectStr, targetStr){
+function matches(inspectStr, targetStr) {
   return -1 !== inspectStr.toLowerCase().indexOf(targetStr.toLowerCase());
 }
 
-function tvShowMatchesQuery(show, query) {  
+function tvShowMatchesQuery(show, query) {
   return (
-    matches(show.name, query)  ||
-    show.genres.some(genre => matches(genre, query)) 
+    matches(show.name, query) ||
+    show.genres.some(genre => matches(genre, query))
     //|| matches(show.summary, query)
   );
 }
@@ -29,21 +29,27 @@ function TVShowList(props) {
   const [filteredShows, setFilteredShows] = useState([]);
   //STATE HOOK: query from text input box
   const [query, setQuery] = useState("mystery");
+  //STATE HOOK: isLoading
+  const [foo, setFoo] = useState("hi");
 
   //EFFECT HOOK: fetch data from API
   useEffect(() => {
     if (isLive) {
       console.log("fetching data...");
-
+      setFoo("3");
       const fetchData = async () => {
         const result = await axios("https://api.tvmaze.com/shows");
         setData({ shows: result.data });
+        setFoo("1");
       };
       fetchData();
     } else {
+      setFoo("3");
       console.log("using static fake data");
       setData({ shows: sortByRating(FakeData).slice(0, 100) });
+      setFoo("1");
     }
+    
   }, []); //Note: IMPORTANT don't forget [] as last param so that useEffect does not execute on any state change
   //(INCLUDING the one it causes)
 
@@ -54,55 +60,69 @@ function TVShowList(props) {
   useEffect(() => {
     //may run before a fetch has ever set data,
     //but it's ok because we init data to {shows:[]}
-    setFilteredShows(data.shows.filter(show => tvShowMatchesQuery(show, query)));
+    setFilteredShows(
+      data.shows.filter(show => tvShowMatchesQuery(show, query))
+    );
   }, [query, data]);
 
   return (
     <div className="TVShowList">
+      <span>foo: {foo}</span>
+      <span>query: {query}</span>
       <div id="controlPanel">
-        <span className='control'>Filtering for </span>
+        <span className="control">Filtering for </span>
         <input
           id="searchInput"
-          className='control' 
+          className="control"
           type="text"
           placeholder="search for a show"
           value={query}
           onChange={event => setQuery(event.target.value)}
         />
-        <div className='control' id="filterSummary">{filteredShows.length}</div>
+        <div className="control" id="filterSummary">
+          {filteredShows.length}
+        </div>
       </div>
-      <ul>
-        {filteredShows.map(item => (
-          <li key={item.id} className="show">
-            <a href={item.url}>
-              <h1>{item.name}</h1>
-            </a>
-            <div className="three-panels">
-              <figure className="panel panel-one">
-                <img src={item.image.medium} alt="{item.name}" />
-              </figure>
-              <div className="panel panel-two">{stripTags(item.summary)}</div>
-              <div className="panel panel-three">
-                <p>
-                  <span className="info-key">Rated:</span>{" "}
-                  {item.rating && item.rating.average}
-                </p>
-                <p>
-                  <span className="info-key">Genres: </span>
-                  {item.genres && item.genres.join(" | ")}
-                </p>
-                <p>
-                  <span className="info-key">Status:</span> {item.status}
-                </p>
-                <p>
-                  <span className="info-key">Runtime:</span> {item.runtime}
-                </p>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <RawJSONView json={filteredShows}></RawJSONView>
+      {(foo || true) ? (
+        <div>
+          <ul>
+            {filteredShows.map(item => (
+              <li key={item.id} className="show">
+                <a href={item.url}>
+                  <h1>{item.name}</h1>
+                </a>
+                <div className="three-panels">
+                  <figure className="panel panel-one">
+                    <img src={item.image.medium} alt="{item.name}" />
+                  </figure>
+                  <div className="panel panel-two">
+                    {stripTags(item.summary)}
+                  </div>
+                  <div className="panel panel-three">
+                    <p>
+                      <span className="info-key">Rated:</span>{" "}
+                      {item.rating && item.rating.average}
+                    </p>
+                    <p>
+                      <span className="info-key">Genres: </span>
+                      {item.genres && item.genres.join(" | ")}
+                    </p>
+                    <p>
+                      <span className="info-key">Status:</span> {item.status}
+                    </p>
+                    <p>
+                      <span className="info-key">Runtime:</span> {item.runtime}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <RawJSONView json={filteredShows}></RawJSONView>
+        </div>
+      ) : (
+        "loading..."
+      )}
     </div>
   );
 }
