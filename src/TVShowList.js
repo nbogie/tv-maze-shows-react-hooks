@@ -9,10 +9,16 @@ function sortByRating(shows) {
   shows.sort((a, b) => b.rating.average - a.rating.average);
   return shows;
 }
-function showMatchesQuery(show, query) {
+
+function matches(inspectStr, targetStr){
+  return -1 !== inspectStr.toLowerCase().indexOf(targetStr.toLowerCase());
+}
+
+function tvShowMatchesQuery(show, query) {  
   return (
-    -1 !== show.name.toLowerCase().indexOf(query.toLowerCase()) ||
-    -1 !== show.summary.toLowerCase().indexOf(query.toLowerCase())
+    matches(show.name, query)  ||
+    show.genres.some(genre => matches(genre, query)) 
+    //|| matches(show.summary, query)
   );
 }
 function TVShowList(props) {
@@ -48,12 +54,13 @@ function TVShowList(props) {
   useEffect(() => {
     //may run before a fetch has ever set data,
     //but it's ok because we init data to {shows:[]}
-    setFilteredShows(data.shows.filter(show => showMatchesQuery(show, query)));
+    setFilteredShows(data.shows.filter(show => tvShowMatchesQuery(show, query)));
   }, [query, data]);
 
   return (
     <div className="TVShowList">
       <div id="controlPanel">
+        <span className='control'>Filtering for </span>
         <input
           id="searchInput"
           className='control' 
@@ -62,8 +69,6 @@ function TVShowList(props) {
           value={query}
           onChange={event => setQuery(event.target.value)}
         />
-        <span className='control'>Filtering for </span>
-        <div className='control' id="queryEcho">{query}</div>
         <div className='control' id="filterSummary">{filteredShows.length}</div>
       </div>
       <ul>

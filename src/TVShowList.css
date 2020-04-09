@@ -54,6 +54,7 @@ img {
   max-width: 100%;
   height: auto;
   display: inline-block;
+  border-radius: 3px;
 }
 
 .info-key {
@@ -88,11 +89,7 @@ input {
   padding: 10px;
   margin: 10px 10px 0 10px;
 }
-#queryEcho {
-  background: yellow;
-  margin-left: 0px;
-  margin-right: 0px;
-}
+
 #filterSummary::before {
   content: "found ";
 }
