@@ -4,6 +4,7 @@ import "./TVShowList.css";
 import FakeData from "./tvmaze_shows.json";
 
 const isLive = false;
+const showJSON = false;
 
 function TVShowList(props) {
   const [data, setData] = useState({ shows: [] });
