@@ -33,16 +33,16 @@ function TVShowList(props) {
         {data.shows.map(item => (
           <li key={item.id} className="show">
             <a href={item.url}>
-              <h2>{item.name}</h2>
+              <h1>{item.name}</h1>
             </a>
             <div className="three-panels">
-              <figure className="panel panel-one" >
-              <img src={item.image.medium} />
-                </figure>
+              <figure className="panel panel-one">
+                <img src={item.image.medium} />
+              </figure>
               <div className="panel panel-two">{stripTags(item.summary)}</div>
               <div className="panel panel-three">
-                Rated: {item.rating && item.rating.average} (
-                {item.genres && item.genres.join(",")})
+                <p>Rated: {item.rating && item.rating.average}</p>
+                <p>({item.genres && item.genres.join(",")})</p>
               </div>
             </div>
           </li>
