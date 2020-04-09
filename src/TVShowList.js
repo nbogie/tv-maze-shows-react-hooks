@@ -41,8 +41,9 @@ function TVShowList(props) {
               </figure>
               <div className="panel panel-two">{stripTags(item.summary)}</div>
               <div className="panel panel-three">
-                <p>Rated: {item.rating && item.rating.average}</p>
-                <p>({item.genres && item.genres.join(",")})</p>
+                <p><span class='info-key'>Rated:</span> {item.rating && item.rating.average}</p>
+                <p><span class='info-key'>Genres: </span>{item.genres && item.genres.join(" | ")}</p>
+                <p><span class='info-key'>Status:</span> {item.status }</p>
               </div>
             </div>
           </li>
