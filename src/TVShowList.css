@@ -1,11 +1,15 @@
 body {
   font-family: 'Merriweather', serif;
+  color: #202020;
 }
 
 h1,h2,h3 {
   font-family: 'Lora', serif;
 }
-
+a {
+  text-decoration: none;
+  color: #202020;
+}
 .show {
   //background: #c0e0d0;
   padding: 10px;
