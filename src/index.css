@@ -1,18 +1,6 @@
-.person-card {
-  background: #c0e0d0;
-  padding: 10px;
-  margin: 10px;
-  box-shadow: 4px 4px 10px 2px #ccc;
-  border-radius: 5px;
-}
-
-.card-section {
-  padding: 10px;
-  margin: 10px;
-  border-bottom: 3px solid black;
-}
 
 #root {
-  width: 80%;
+  width: 60%;
+  max-width: 800px;
   margin: 0 auto;
 }

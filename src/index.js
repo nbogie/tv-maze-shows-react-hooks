@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 import App from './App';
-import PalettesList from './PalettesList';
+import TVShowList from './TVShowList';
 
 
 function PersonCard(props){
@@ -20,7 +20,7 @@ const child = (
   <div>
     Hello, world!
     <Example/>
-    <PalettesList/>
+    <TVShowList/>
     <PersonCard name='Alice'></PersonCard>
     <PersonCard name='Bob'></PersonCard>
     <PersonCard name='Craig'></PersonCard>
