@@ -21,13 +21,12 @@ function TVShowList(props) {
         setData({ shows: result.data });
       };
       fetchData();
-      
     } else {
       console.log("using static fake data");
-      setData({ shows: sortByRating(FakeData).slice(0, 20) });
+      setData({ shows: sortByRating(FakeData).slice(0, 3) });
     }
   }, []); //Note: IMPORTANT don't forget [] as last param so that useEffect does not execute on any state change
-          //(INCLUDING the one it causes)
+  //(INCLUDING the one it causes)
 
   return (
     <div className="TVShowList">
@@ -39,26 +38,50 @@ function TVShowList(props) {
             </a>
             <div className="three-panels">
               <figure className="panel panel-one">
-                <img src={item.image.medium} alt="{item.name}"/>
+                <img src={item.image.medium} alt="{item.name}" />
               </figure>
               <div className="panel panel-two">{stripTags(item.summary)}</div>
               <div className="panel panel-three">
-                <p><span className='info-key'>Rated:</span> {item.rating && item.rating.average}</p>
-                <p><span className='info-key'>Genres: </span>{item.genres && item.genres.join(" | ")}</p>
-                <p><span className='info-key'>Status:</span> {item.status }</p>
-                <p><span className='info-key'>Runtime:</span> {item.runtime }</p>
+                <p>
+                  <span className="info-key">Rated:</span>{" "}
+                  {item.rating && item.rating.average}
+                </p>
+                <p>
+                  <span className="info-key">Genres: </span>
+                  {item.genres && item.genres.join(" | ")}
+                </p>
+                <p>
+                  <span className="info-key">Status:</span> {item.status}
+                </p>
+                <p>
+                  <span className="info-key">Runtime:</span> {item.runtime}
+                </p>
               </div>
             </div>
           </li>
         ))}
       </ul>
-        {showJSON ? (
-          <div id="rawJSON">{JSON.stringify(data.shows, null, 2)}</div>
-        ) : null}
+      <RawJSONView json={data}></RawJSONView>
     </div>
   );
 }
 
+function RawJSONView(props){
+    const [data, setData] = useState({ visible: false });
+
+  return(
+        <section>
+        <header><h1>Raw JSON View
+          <button onClick={() => setData({visible: true})}>ON</button> |
+          <button onClick={() => setData({visible: false})}>OFF</button>
+        </h1>
+        </header>
+        {data.visible ? (
+          <div id="rawJSON">{JSON.stringify(props.json.shows, null, 2)}</div>
+        ) : null}
+      </section>
+);
+}
 //remove tags by replacing the matched expression with an empty string.
 //This function uses a regular expression.  It is not important to learn these on the course.
 function stripTags(str) {
