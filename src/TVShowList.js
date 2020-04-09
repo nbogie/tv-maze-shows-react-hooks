@@ -3,6 +3,7 @@ import axios from "axios";
 import "./TVShowList.css";
 import FakeData from "./tvmaze_shows.json";
 import RawJSONView from "./RawJSONView";
+
 const isLive = false;
 
 function sortByRating(shows) {
@@ -53,8 +54,6 @@ function TVShowList(props) {
       
     }
 
-            setLoading(true);
-
   }, []); //Note: IMPORTANT don't forget [] as last param so that useEffect does not execute on any state change
   //(INCLUDING the one it causes)
 
@@ -72,8 +71,6 @@ function TVShowList(props) {
 
   return (
     <div className="TVShowList">
-      <span>loading: ""{loading ? "LOADING": "DONE"}""</span>
-      <span>query: {query}</span>
       <div id="controlPanel">
         <span className="control">Filtering for </span>
         <input
@@ -88,7 +85,7 @@ function TVShowList(props) {
           {filteredShows.length}
         </div>
       </div>
-      {loading ? (
+      {!loading ? (
         <div>
           <ul>
             {filteredShows.map(item => (
@@ -126,7 +123,7 @@ function TVShowList(props) {
           <RawJSONView json={filteredShows}></RawJSONView>
         </div>
       ) : (
-        "loading..."
+        <div id='loadingNotice'>"loading..."</div>
       )}
     </div>
   );

@@ -98,3 +98,11 @@ input {
 }
 #filterSummary {
 }
+
+#loadingNotice {
+  padding: 200px;
+  font-size: 5rem;
+  margin: 100px;
+  border: 10px solid black;
+  border-radius: 20px;
+}
