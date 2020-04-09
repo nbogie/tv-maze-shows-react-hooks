@@ -1,6 +1,7 @@
 body {
   font-family: 'Merriweather', serif;
   color: #202020;
+line-height: 1.6;
 }
 
 h1,h2,h3 {
@@ -22,13 +23,24 @@ a {
 li {
   list-style-type: none;
 }
+figure {
+  min-width: 160px;
+  margin: 0;
+}
+
 .three-panels {
   display: flex;
 }
 .panel {
   padding: 10px;
 }
+.panel-three {
+  width: 300px;
+}
 
 img {
     width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
 }

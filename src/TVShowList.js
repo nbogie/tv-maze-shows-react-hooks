@@ -35,10 +35,12 @@ function TVShowList(props) {
             <a href={item.url}>
               <h2>{item.name}</h2>
             </a>
-            <div class="three-panels">
-              <img class="panel panel-one" src={item.image.medium} />
-              <div class="panel panel-two">{stripTags(item.summary)}</div>
-              <div class="panel panel-three">
+            <div className="three-panels">
+              <figure className="panel panel-one" >
+              <img src={item.image.medium} />
+                </figure>
+              <div className="panel panel-two">{stripTags(item.summary)}</div>
+              <div className="panel panel-three">
                 Rated: {item.rating && item.rating.average} (
                 {item.genres && item.genres.join(",")})
               </div>
