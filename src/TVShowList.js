@@ -9,10 +9,22 @@ function sortByRating(shows) {
   shows.sort((a, b) => b.rating.average - a.rating.average);
   return shows;
 }
+function showMatchesQuery(show, query) {
+  return (
+    -1 !== show.name.toLowerCase().indexOf(query) ||
+    -1 !== show.summary.toLowerCase().indexOf(query)
+  );
+}
 function TVShowList(props) {
+  //HOOKS: 
+  //STATE HOOK: fetched data
   const [data, setData] = useState({ shows: [] });
+  //STATE HOOK: filtered shows (filtered from data)
+  const [filteredShows, setFilteredShows] = useState([]);
+  //STATE HOOK: query from text input box
   const [query, setQuery] = useState("mystery");
-  
+
+  //EFFECT HOOK: fetch data from API
   useEffect(() => {
     if (isLive) {
       console.log("fetching data...");
@@ -30,18 +42,30 @@ function TVShowList(props) {
   //(INCLUDING the one it causes)
 
   
+  //EFFECT HOOK: 
+  //updates filteredShows by filtering data with query,
+  //runs whenever the query is changed (each keystroke)
+  //or indeed when the data itself is changed (fetched new data)
   useEffect(() => {
-    
-  }, [query]);
+    //may run before a fetch has ever set data,
+    //but it's ok because we init data to {shows:[]}
+    setFilteredShows(data.shows.filter(show => showMatchesQuery(show, query)));
+  }, [query, data]);
+
+  
   return (
     <div className="TVShowList">
-      <input id="searchInput" type="text" placeholder="search for a show"        
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="search for a show"
         value={query}
         onChange={event => setQuery(event.target.value)}
-        />
-      <span>{query}</span>
+      />
+      <span id='queryEcho'>{query}</span>
+      <span id='filterSummary'>Filtered data: {filteredShows.length}</span>
       <ul>
-        {filteredData.shows.map(item => (
+        {filteredShows.map(item => (
           <li key={item.id} className="show">
             <a href={item.url}>
               <h1>{item.name}</h1>
@@ -71,7 +95,7 @@ function TVShowList(props) {
           </li>
         ))}
       </ul>
-      <RawJSONView json={data}></RawJSONView>
+      <RawJSONView json={filteredShows}></RawJSONView>
     </div>
   );
 }

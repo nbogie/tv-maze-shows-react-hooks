@@ -76,3 +76,20 @@ h1 button {
   border: none;
   font-size: 1rem;
 }
+input {
+  padding: 10px;
+  margin: 10px 10px 0 10px;
+}
+#queryEcho {
+  padding: 10px;
+  margin: 10px;
+  margin-bottom: 0px;
+  background: yellow;
+  
+}
+#filterSummary{
+  padding: 10px;
+  margin: 10px;
+  margin-bottom: 0px;
+}
+   

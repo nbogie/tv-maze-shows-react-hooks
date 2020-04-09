@@ -16,7 +16,7 @@ function RawJSONView(props) {
         </h1>
       </header>
       {visible ? (
-        <div id="rawJSON">{JSON.stringify(props.json.shows, null, 2)}</div>
+        <div id="rawJSON">{JSON.stringify(props.json, null, 2)}</div>
       ) : null}
     </section>
   );
