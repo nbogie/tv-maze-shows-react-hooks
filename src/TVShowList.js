@@ -15,16 +15,19 @@ function TVShowList(props) {
   useEffect(() => {
     if (isLive) {
       console.log("fetching data...");
+
       const fetchData = async () => {
         const result = await axios("https://api.tvmaze.com/shows");
         setData({ shows: result.data });
       };
       fetchData();
+      
     } else {
       console.log("using static fake data");
       setData({ shows: sortByRating(FakeData).slice(0, 20) });
     }
-  }, []);
+  }, []); //Note: IMPORTANT don't forget [] as last param so that useEffect does not execute on any state change
+          //(INCLUDING the one it causes)
 
   return (
     <div className="TVShowList">
@@ -36,13 +39,14 @@ function TVShowList(props) {
             </a>
             <div className="three-panels">
               <figure className="panel panel-one">
-                <img src={item.image.medium} />
+                <img src={item.image.medium} alt="{item.name}"/>
               </figure>
               <div className="panel panel-two">{stripTags(item.summary)}</div>
               <div className="panel panel-three">
-                <p><span class='info-key'>Rated:</span> {item.rating && item.rating.average}</p>
-                <p><span class='info-key'>Genres: </span>{item.genres && item.genres.join(" | ")}</p>
-                <p><span class='info-key'>Status:</span> {item.status }</p>
+                <p><span className='info-key'>Rated:</span> {item.rating && item.rating.average}</p>
+                <p><span className='info-key'>Genres: </span>{item.genres && item.genres.join(" | ")}</p>
+                <p><span className='info-key'>Status:</span> {item.status }</p>
+                <p><span className='info-key'>Runtime:</span> {item.runtime }</p>
               </div>
             </div>
           </li>

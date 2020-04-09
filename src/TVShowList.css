@@ -24,15 +24,12 @@ a {
 .show {
   //background: #c0e0d0;
   padding: 10px;
-  margin: 20px;
+  margin: 20px 0px;
   box-shadow: 4px 4px 10px 2px #ccc;
   border-radius: 5px;
   //border: 2px solid gray;
 }
 
-li {
-  list-style-type: none;
-}
 figure {
   min-width: 160px;
   margin: 0;
@@ -67,5 +64,18 @@ img {
   font-family: monospace;
   white-space: pre;
   padding: 10px;
+ overflow-x: auto; 
 
+
+}
+li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
