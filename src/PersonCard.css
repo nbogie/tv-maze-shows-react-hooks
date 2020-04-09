@@ -1,0 +1,38 @@
+body {
+  font-family: 'Merriweather', serif;
+  color: #202020;
+}
+
+h1,h2,h3 {
+  font-family: 'Lora', serif;
+}
+a {
+  text-decoration: none;
+  color: #202020;
+}
+.show {
+  //background: #c0e0d0;
+  padding: 10px;
+  margin: 20px;
+  box-shadow: 4px 4px 10px 2px #ccc;
+  border-radius: 5px;
+  border: 2px solid gray;
+}
+
+.person-card {
+  background: #c0e0d0;
+  padding: 10px;
+  margin: 20px;
+  box-shadow: 4px 4px 10px 2px #ccc;
+  border-radius: 5px;
+}
+
+.card-section {
+  padding: 10px;
+  margin: 10px;
+  border-bottom: 3px solid black;
+}
+
+li {
+  list-style-type: none;
+}
