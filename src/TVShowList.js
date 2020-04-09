@@ -6,7 +6,7 @@ import FakeData from "./tvmaze_shows.json";
 const isLive = false;
 const showJSON = true;
 
-function sortByRating(shows){
+function sortByRating(shows) {
   shows.sort((a, b) => b.rating.average - a.rating.average);
   return shows;
 }
@@ -14,15 +14,15 @@ function TVShowList(props) {
   const [data, setData] = useState({ shows: [] });
   useEffect(() => {
     if (isLive) {
-      console.log("fetching data...")
+      console.log("fetching data...");
       const fetchData = async () => {
         const result = await axios("https://api.tvmaze.com/shows");
         setData({ shows: result.data });
       };
       fetchData();
     } else {
-      console.log("using static fake data")
-      setData({ shows: sortByRating(FakeData) });
+      console.log("using static fake data");
+      setData({ shows: sortByRating(FakeData).slice(0, 20) });
     }
   }, []);
 
@@ -35,15 +35,21 @@ function TVShowList(props) {
             <a href={item.url}>
               <h2>{item.name}</h2>
             </a>
-            Rated: {item.rating && item.rating.average} (
-            {item.genres && item.genres.join(",")})
-            <img src={item.image.medium} />
-            <p>{stripTags(item.summary)}</p>
+            <div class="three-panels">
+              <img class="panel panel-one" src={item.image.medium} />
+              <div class="panel panel-two">{stripTags(item.summary)}</div>
+              <div class="panel panel-three">
+                Rated: {item.rating && item.rating.average} (
+                {item.genres && item.genres.join(",")})
+              </div>
+            </div>
           </li>
         ))}
       </ul>
       <div>
-        {showJSON ? <pre id="rawJSON">{JSON.stringify(data.shows, null, 2)}</pre> : null }
+        {showJSON ? (
+          <pre id="rawJSON">{JSON.stringify(data.shows, null, 2)}</pre>
+        ) : null}
       </div>
     </div>
   );
