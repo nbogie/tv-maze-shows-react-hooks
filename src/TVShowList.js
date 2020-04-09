@@ -3,13 +3,13 @@ import axios from "axios";
 import "./TVShowList.css";
 
 function TVShowList(props) {
-  const [data, setData] = useState({ hits: [] });
+  const [data, setData] = useState({ shows: [] });
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
         "https://api.tvmaze.com/shows"
       );
-      setData({hits: result.data});
+      setData({shows: result.data});
     };
     fetchData();
   }, []);
@@ -19,7 +19,7 @@ function TVShowList(props) {
     <div className="TVShowList">
       <h2>TV Show List</h2>
       <ul>
-        {data.hits.map(item => (
+        {data.shows.map(item => (
           <li key={item.id} className='show'>
             <a href={item.url}><h2>{item.name}</h2></a>
             Rated: {item.rating && item.rating.average}  ({item.genres && item.genres.join(",")})
@@ -27,6 +27,7 @@ function TVShowList(props) {
           </li>
         ))}
       </ul>
+      <div><pre id='rawJSON'>{JSON.stringify(data.shows, null, 2)}</pre></div>
     </div>
   );
 }
