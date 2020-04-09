@@ -30,26 +30,31 @@ function TVShowList(props) {
   //STATE HOOK: query from text input box
   const [query, setQuery] = useState("mystery");
   //STATE HOOK: isLoading
-  const [foo, setFoo] = useState("hi");
+  const [loading, setLoading] = useState(false);
 
   //EFFECT HOOK: fetch data from API
   useEffect(() => {
     if (isLive) {
       console.log("fetching data...");
-      setFoo("3");
+      setLoading(true);
       const fetchData = async () => {
         const result = await axios("https://api.tvmaze.com/shows");
+        await (new Promise((a, b) => setTimeout(() => a(), 3000)));
         setData({ shows: result.data });
-        setFoo("1");
+        setLoading(false);
+
       };
       fetchData();
     } else {
-      setFoo("3");
+      setLoading(true);
       console.log("using static fake data");
       setData({ shows: sortByRating(FakeData).slice(0, 100) });
-      setFoo("1");
+      setLoading(false);
+      
     }
-    
+
+            setLoading(true);
+
   }, []); //Note: IMPORTANT don't forget [] as last param so that useEffect does not execute on any state change
   //(INCLUDING the one it causes)
 
@@ -67,7 +72,7 @@ function TVShowList(props) {
 
   return (
     <div className="TVShowList">
-      <span>foo: {foo}</span>
+      <span>loading: ""{loading ? "LOADING": "DONE"}""</span>
       <span>query: {query}</span>
       <div id="controlPanel">
         <span className="control">Filtering for </span>
@@ -83,7 +88,7 @@ function TVShowList(props) {
           {filteredShows.length}
         </div>
       </div>
-      {(foo || true) ? (
+      {loading ? (
         <div>
           <ul>
             {filteredShows.map(item => (
