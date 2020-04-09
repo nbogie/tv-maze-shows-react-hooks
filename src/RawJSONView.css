@@ -1,0 +1,7 @@
+#rawJSON {
+  border: 2px solid gray;
+  font-family: monospace;
+  white-space: pre;
+  padding: 10px;
+  overflow-x: auto;
+}

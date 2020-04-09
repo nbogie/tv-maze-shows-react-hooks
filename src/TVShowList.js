@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./TVShowList.css";
 import FakeData from "./tvmaze_shows.json";
-
+import RawJSONView from "./RawJSONView";
 const isLive = false;
-const showJSON = true;
 
 function sortByRating(shows) {
   shows.sort((a, b) => b.rating.average - a.rating.average);
@@ -12,6 +11,8 @@ function sortByRating(shows) {
 }
 function TVShowList(props) {
   const [data, setData] = useState({ shows: [] });
+  const [query, setQuery] = useState("mystery");
+  
   useEffect(() => {
     if (isLive) {
       console.log("fetching data...");
@@ -23,15 +24,24 @@ function TVShowList(props) {
       fetchData();
     } else {
       console.log("using static fake data");
-      setData({ shows: sortByRating(FakeData).slice(0, 3) });
+      setData({ shows: sortByRating(FakeData).slice(0, 100) });
     }
   }, []); //Note: IMPORTANT don't forget [] as last param so that useEffect does not execute on any state change
   //(INCLUDING the one it causes)
 
+  
+  useEffect(() => {
+    
+  }, [query]);
   return (
     <div className="TVShowList">
+      <input id="searchInput" type="text" placeholder="search for a show"        
+        value={query}
+        onChange={event => setQuery(event.target.value)}
+        />
+      <span>{query}</span>
       <ul>
-        {data.shows.map(item => (
+        {filteredData.shows.map(item => (
           <li key={item.id} className="show">
             <a href={item.url}>
               <h1>{item.name}</h1>
@@ -66,22 +76,6 @@ function TVShowList(props) {
   );
 }
 
-function RawJSONView(props){
-    const [data, setData] = useState({ visible: false });
-
-  return(
-        <section>
-        <header><h1>Raw JSON View
-          <button onClick={() => setData({visible: true})}>ON</button> |
-          <button onClick={() => setData({visible: false})}>OFF</button>
-        </h1>
-        </header>
-        {data.visible ? (
-          <div id="rawJSON">{JSON.stringify(props.json.shows, null, 2)}</div>
-        ) : null}
-      </section>
-);
-}
 //remove tags by replacing the matched expression with an empty string.
 //This function uses a regular expression.  It is not important to learn these on the course.
 function stripTags(str) {

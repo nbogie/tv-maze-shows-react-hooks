@@ -59,20 +59,10 @@ img {
 .info-key {
   font-weight: bold;
 }
-#rawJSON {
-  border: 2px solid gray;
-  font-family: monospace;
-  white-space: pre;
-  padding: 10px;
- overflow-x: auto; 
-
-
-}
 li {
   list-style-type: none;
   margin: 0;
   padding: 0;
-
 }
 
 ul {
