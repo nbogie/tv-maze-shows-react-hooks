@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./PalettesList.css";
 
+
+
 function PalettesList(props) {
   const [data, setData] = useState({ hits: [] });
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
-        "https://www.colourlovers.com/api/palettes/top?format=json&numResults=20&jsonCallback="
+        "https://anapioficeandfire.com/api/characters/"
       );
       setData({hits: result.data});
     };
@@ -24,7 +26,7 @@ function PalettesList(props) {
       <ul>
         {data.hits.map(item => (
           <li key={item.id}>
-            <a href={item.url}>{item.title}</a>
+            <a href={item.url}>{item.aliases[0]} ({item.culture})</a>
           </li>
         ))}
       </ul>
