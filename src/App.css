@@ -1,0 +1,14 @@
+#container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+header {
+  background: #3f3f3f;
+  height: 124px;
+}
+header h1 {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}

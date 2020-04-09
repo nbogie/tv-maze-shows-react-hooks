@@ -13,7 +13,7 @@ h3 {
   line-height: 1;
 }
 
-h1 {
+.show h1 {
   font-size: 3rem;
   margin: 0px 0px 10px 10px;
 }
