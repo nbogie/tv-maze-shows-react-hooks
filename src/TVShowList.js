@@ -11,12 +11,12 @@ function sortByRating(shows) {
 }
 function showMatchesQuery(show, query) {
   return (
-    -1 !== show.name.toLowerCase().indexOf(query) ||
-    -1 !== show.summary.toLowerCase().indexOf(query)
+    -1 !== show.name.toLowerCase().indexOf(query.toLowerCase()) ||
+    -1 !== show.summary.toLowerCase().indexOf(query.toLowerCase())
   );
 }
 function TVShowList(props) {
-  //HOOKS: 
+  //HOOKS:
   //STATE HOOK: fetched data
   const [data, setData] = useState({ shows: [] });
   //STATE HOOK: filtered shows (filtered from data)
@@ -41,8 +41,7 @@ function TVShowList(props) {
   }, []); //Note: IMPORTANT don't forget [] as last param so that useEffect does not execute on any state change
   //(INCLUDING the one it causes)
 
-  
-  //EFFECT HOOK: 
+  //EFFECT HOOK:
   //updates filteredShows by filtering data with query,
   //runs whenever the query is changed (each keystroke)
   //or indeed when the data itself is changed (fetched new data)
@@ -52,18 +51,21 @@ function TVShowList(props) {
     setFilteredShows(data.shows.filter(show => showMatchesQuery(show, query)));
   }, [query, data]);
 
-  
   return (
     <div className="TVShowList">
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="search for a show"
-        value={query}
-        onChange={event => setQuery(event.target.value)}
-      />
-      <span id='queryEcho'>{query}</span>
-      <span id='filterSummary'>Filtered data: {filteredShows.length}</span>
+      <div id="controlPanel">
+        <input
+          id="searchInput"
+          className='control' 
+          type="text"
+          placeholder="search for a show"
+          value={query}
+          onChange={event => setQuery(event.target.value)}
+        />
+        <span className='control'>Filtering for </span>
+        <div className='control' id="queryEcho">{query}</div>
+        <div className='control' id="filterSummary">{filteredShows.length}</div>
+      </div>
       <ul>
         {filteredShows.map(item => (
           <li key={item.id} className="show">

@@ -80,16 +80,24 @@ input {
   padding: 10px;
   margin: 10px 10px 0 10px;
 }
+#controlPanel {
+  display: flex;
+}
+
+.control {
+  padding: 10px;
+  margin: 10px 10px 0 10px;
+}
 #queryEcho {
-  padding: 10px;
-  margin: 10px;
-  margin-bottom: 0px;
   background: yellow;
-  
+  margin-left: 0px;
+  margin-right: 0px;
 }
-#filterSummary{
-  padding: 10px;
-  margin: 10px;
-  margin-bottom: 0px;
+#filterSummary::before {
+  content: "found ";
 }
-   
+#filterSummary::after {
+  content: " shows";
+}
+#filterSummary {
+}
