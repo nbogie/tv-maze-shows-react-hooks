@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
-//import App from './App';
+import App from './App';
+import PalettesList from './PalettesList';
 
 
 function PersonCard(props){
@@ -19,6 +20,7 @@ const child = (
   <div>
     Hello, world!
     <Example/>
+    <PalettesList/>
     <PersonCard name='Alice'></PersonCard>
     <PersonCard name='Bob'></PersonCard>
     <PersonCard name='Craig'></PersonCard>
