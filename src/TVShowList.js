@@ -28,7 +28,6 @@ function TVShowList(props) {
 
   return (
     <div className="TVShowList">
-      <h2>TV Show List</h2>
       <ul>
         {data.shows.map(item => (
           <li key={item.id} className="show">
@@ -49,11 +48,9 @@ function TVShowList(props) {
           </li>
         ))}
       </ul>
-      <div>
         {showJSON ? (
-          <pre id="rawJSON">{JSON.stringify(data.shows, null, 2)}</pre>
+          <div id="rawJSON">{JSON.stringify(data.shows, null, 2)}</div>
         ) : null}
-      </div>
     </div>
   );
 }
